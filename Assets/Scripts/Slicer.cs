@@ -11,6 +11,7 @@ public class Slicer : MonoBehaviour
     [SerializeField] Transform endPoint;
     [SerializeField] LayerMask sliceableLayer;
     [SerializeField] Rigidbody rb;
+    [SerializeField] float swingPower;
     int slicedLayer;
     void Start()
     {
@@ -19,7 +20,7 @@ public class Slicer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Physics.Linecast(startPoint.position, endPoint.position, out RaycastHit hit, sliceableLayer) && rb.velocity.magnitude >= 20f)
+        if (Physics.Linecast(startPoint.position, endPoint.position, out RaycastHit hit, sliceableLayer) && rb.velocity.magnitude >= swingPower)
         {
             Slice(hit.transform.gameObject);
         }
@@ -44,13 +45,16 @@ public class Slicer : MonoBehaviour
 
             float upperDist = Vector3.Distance(target.transform.position, upperHull.GetComponent<Collider>().bounds.center);
             float lowerDist = Vector3.Distance(target.transform.position, lowerHull.GetComponent<Collider>().bounds.center);
-            if (upperDist < lowerDist)
+            if (target.GetComponent<Rigidbody>().isKinematic == true)
             {
-                upperHull.GetComponent<Rigidbody>().isKinematic = true;
-            }
-            else
-            {
-                lowerHull.GetComponent<Rigidbody>().isKinematic = true;
+                if (upperDist < lowerDist)
+                {
+                    upperHull.GetComponent<Rigidbody>().isKinematic = true;
+                }
+                else
+                {
+                    lowerHull.GetComponent<Rigidbody>().isKinematic = true;
+                }
             }
         }
     }

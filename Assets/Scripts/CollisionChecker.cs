@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class CollisionChecker : MonoBehaviour
 {
-    bool isColliding;
     GameObject collisioned;
     // Start is called before the first frame update
-    void Start()
-    {
-        isColliding = false;
-        collisioned = null;
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
-            isColliding = true;
+        Debug.Log("OCE: " + collision.transform.name);
         if (collision.gameObject.CompareTag("Sword"))
         {
             collisioned = collision.gameObject;
@@ -29,7 +23,6 @@ public class CollisionChecker : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        isColliding = false;
         collisioned = null;
     }
 

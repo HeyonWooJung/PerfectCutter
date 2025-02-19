@@ -79,10 +79,12 @@ public class PlayerMove : MonoBehaviour
                 if (sword == null && curHand.GetComponent<CollisionChecker>().GetCollision() != null)
                 {
                     sword = curHand.GetComponent<CollisionChecker>().GetCollision().GetComponent<ConfigurableJoint>();
+                    curHand.transform.position = new Vector3(sword.transform.position.x, curHand.transform.position.y, sword.transform.position.z);
                     ChangeHand(!isLhand);
                 }
                 else if (sword != null && curHand.GetComponent<CollisionChecker>().GetCollision() == sword.gameObject)
                 {
+                    curHand.transform.position = new Vector3(sword.transform.position.x, curHand.transform.position.y, sword.transform.position.z);
                     MakeAxis();
                 }
             }
@@ -110,7 +112,9 @@ public class PlayerMove : MonoBehaviour
         curHandPos.y = Mathf.Clamp(curHandPos.y, curShoulder.transform.position.y - dist, curShoulder.transform.position.y + dist);
         curHandPos.z = Mathf.Clamp(curHandPos.z, curShoulder.transform.position.z - dist, curShoulder.transform.position.z + dist);
 
+        curHandPos = curShoulder.transform.position + Vector3.ClampMagnitude(curHandPos - curShoulder.transform.position, dist);
         ss.transform.position = curHandPos;
+        curHand.transform.position = curHandPos;
         if (!isLhand)
         {
             leftHand.transform.position = lHandPos;
@@ -119,21 +123,28 @@ public class PlayerMove : MonoBehaviour
         {
             rightHand.transform.position = rHandPos;
         }
-        if (grabbed)
-        {
-            //curHandPos = movePoint.transform.position;
-            movePoint.transform.position = curHand.transform.position;
-            //if (sword.GetComponent<Rigidbody>().velocity.magnitude >= 20)
-            //{
-            //    Debug.Log("Sword magni: " + sword.GetComponent<Rigidbody>().velocity.magnitude); //20쯤?
-            //}
-        }
-        curHand.transform.position = curShoulder.transform.position + Vector3.ClampMagnitude(curHandPos - curShoulder.transform.position, dist);
+
+    }
+
+    private void FixedUpdate()
+    {
+
+        //if (grabbed)
+        //{
+        //curHandPos = movePoint.transform.position;
+        //movePoint.transform.position = curHand.transform.position;
+        //if (sword.GetComponent<Rigidbody>().velocity.magnitude >= 20)
+        //{
+        //    Debug.Log("Sword magni: " + sword.GetComponent<Rigidbody>().velocity.magnitude); //20쯤?
+        //}
+        //}
     }
 
     void MakeAxis()
     {
         grabbed = true;
+        leftHand.GetComponent<Collider>().enabled = false;
+        rightHand.GetComponent<Collider>().enabled = false;
         Debug.Log("MakeAxis");
         axisDist = Vector3.Distance(leftHand.transform.position, rightHand.transform.position);
         if (isLhand)
@@ -196,7 +207,7 @@ public class PlayerMove : MonoBehaviour
                 movePoint.transform.parent = leftHand.transform;
                 movePoint.transform.position = leftHand.transform.position;
             }
-        } 
+        }
         else if (lHand == false && isLhand == true)
         {
             isLhand = false;
