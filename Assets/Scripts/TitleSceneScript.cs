@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class TitleSceneScript : MonoBehaviour
+{
+    public GameObject diffPanel;
+    public TMP_Text titleLeft;
+
+    public void SetDiffPanel(bool state)
+    {
+        diffPanel.SetActive(state);
+    }
+    
+    public void ChangeDifficulty(string text)
+    {
+        titleLeft.text = text;
+    }
+}

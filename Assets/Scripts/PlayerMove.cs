@@ -47,6 +47,7 @@ public class PlayerMove : MonoBehaviour
         curHand = leftHand;
         curShoulder = leftShoulder;
         isLhand = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame

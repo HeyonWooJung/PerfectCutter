@@ -12,6 +12,7 @@ public class Slicer : MonoBehaviour
     [SerializeField] LayerMask sliceableLayer;
     [SerializeField] Rigidbody rb;
     [SerializeField] float swingPower;
+    [SerializeField] float angleLimit;
     [SerializeField] Transform cuts;
     int slicedLayer;
 
@@ -27,8 +28,6 @@ public class Slicer : MonoBehaviour
         if (Physics.Linecast(startPoint.position, endPoint.position, out RaycastHit hit, sliceableLayer) && rb.velocity.magnitude >= swingPower)
         {
             Slice(hit.transform.gameObject);
-            Debug.Log("velo: " + rb.velocity);
-            tester.transform.rotation = Quaternion.LookRotation(rb.velocity);
         }
     }
 
@@ -36,11 +35,12 @@ public class Slicer : MonoBehaviour
     {
         Vector3 planeVector = Vector3.Cross(endPoint.position - startPoint.position, rb.velocity);
         planeVector.Normalize();
-        Debug.Log("Cross: " + planeVector);
+
         float arrowAngle = target.GetComponent<PlatformScript>().GetDirection();
         float swordAngle = Vector3.Angle(endPoint.position.normalized, planeVector);
-        Debug.Log("aAngle: " + arrowAngle + " sAngle: " + swordAngle);
-        if (arrowAngle - 10f <= swordAngle && swordAngle <= arrowAngle + 10f)
+        Debug.Log("Angle: " + swordAngle);
+
+        if (arrowAngle - angleLimit <= swordAngle && swordAngle <= arrowAngle + angleLimit)
         {
             SlicedHull hull = target.Slice(endPoint.position, planeVector);
 

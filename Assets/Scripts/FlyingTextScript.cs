@@ -18,7 +18,7 @@ public class FlyingTextScript : MonoBehaviour
     {
         while (text.color.a > 0)
         {
-            rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 2);
+            rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 4);
             if (text.color.a >= 0.03f)
             {
                 text.color = new Color(text.color.r, text.color.g, text.color.b, text.color.a - 0.025f);
