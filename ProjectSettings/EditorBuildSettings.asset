@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: e9424b0e461334e4190c8c0251d84639
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: fa07d611da2169243971241b2414c978
+  - enabled: 1
     path: Assets/Scenes/PerfectCutter.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

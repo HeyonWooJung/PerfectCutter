@@ -14,21 +14,33 @@ public class Slicer : MonoBehaviour
     [SerializeField] float swingPower;
     [SerializeField] float angleLimit;
     [SerializeField] Transform cuts;
+    [SerializeField] AudioManager audioManager;
     int slicedLayer;
 
     public event Action<int> OnScoreChanged;
 
     void Start()
     {
+        audioManager.EquipSword();
         slicedLayer = LayerMask.NameToLayer("Sliceable");
     }
 
     private void FixedUpdate()
     {
+        if (rb.velocity.magnitude >= swingPower && !audioManager.Playing())
+        {
+            audioManager.SwingSword();
+        }
         if (Physics.Linecast(startPoint.position, endPoint.position, out RaycastHit hit, sliceableLayer) && rb.velocity.magnitude >= swingPower)
         {
             Slice(hit.transform.gameObject);
         }
+    }
+
+    public void PrecisionSetting(float sPower, float aLimit)
+    {
+        swingPower = sPower;
+        angleLimit = aLimit;
     }
 
     public void Slice(GameObject target)
@@ -72,6 +84,7 @@ public class Slicer : MonoBehaviour
             }
             int score = 100 - (int)MathF.Abs(arrowAngle - swordAngle);
             NotifyScoreChange(score);
+            audioManager.BreakWood(score);
         }
         else
         {

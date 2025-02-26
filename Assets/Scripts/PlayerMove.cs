@@ -48,6 +48,12 @@ public class PlayerMove : MonoBehaviour
         curShoulder = leftShoulder;
         isLhand = true;
         Cursor.lockState = CursorLockMode.Locked;
+        GameManager.Instance.GameEnd += GameEnd;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.GameEnd -= GameEnd;
     }
 
     // Update is called once per frame
@@ -57,11 +63,11 @@ public class PlayerMove : MonoBehaviour
         mouseY = Input.GetAxis("Mouse Y");
         //Debug.Log("X: " + mouseX + " Y: " +  mouseY);
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) && isLhand == false)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && isLhand == false && grabbed == true)
         {
             ChangeHand(true);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && isLhand == true)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && isLhand == true && grabbed == true)
         {
             ChangeHand(false);
         }
@@ -184,6 +190,7 @@ public class PlayerMove : MonoBehaviour
             sword.anchor = new Vector3(0, -shortDist, 0);
         }
         sword.GetComponent<Slicer>().enabled = true;
+        GameManager.Instance.PCGameStart();
         //sword.GetComponent<ConfigurableJoint>().anchor = Vector3.zero;
         //sword.GetComponent<ConfigurableJoint>().connectedAnchor = new Vector3(0, Vector3.Distance(rotAxis.transform.position, movePoint.transform.position) / sword.transform.localScale.y, 0);
         //sword.GetComponent<ConfigurableJoint>().connectedAnchor = Vector3.zero;
@@ -244,6 +251,12 @@ public class PlayerMove : MonoBehaviour
             isSwordAncherShouldLong = !isSwordAncherShouldLong;
         }
         //movePoint.GetComponent<ConfigurableJoint>().anchor = new Vector3(0, -movePoint.GetComponent<ConfigurableJoint>().anchor.y, 0);
+    }
+
+    void GameEnd()
+    {
+        sword.GetComponent<Slicer>().enabled = false;
+        this.enabled = false;
     }
 
     private void OnDrawGizmos()
