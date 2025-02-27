@@ -62,7 +62,10 @@ public class PlayerMove : MonoBehaviour
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
         //Debug.Log("X: " + mouseX + " Y: " +  mouseY);
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.PauseGame();
+        }
         if (Input.GetKeyDown(KeyCode.Alpha1) && isLhand == false && grabbed == true)
         {
             ChangeHand(true);

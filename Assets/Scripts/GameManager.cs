@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
 
     public List<Ranking> rankings;
 
+    public PauseScript pauseScript;
+
     string filePath;
 
     public void SetPCMS(PerfectCutModeScript script) 
@@ -49,6 +51,15 @@ public class GameManager : MonoBehaviour
         if (GameEnd != null)
         {
             GameEnd();
+        }
+    }
+
+    public void PauseGame()
+    {
+        if (pauseScript !=  null && pauseScript.gameObject.activeSelf == false)
+        {
+            pauseScript.gameObject.SetActive(true);
+            pauseScript.Pause();
         }
     }
 
@@ -94,6 +105,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             filePath = Path.Combine(Application.persistentDataPath, "Rankings.json");
+            LoadData();
+            Debug.Log("Path: " + filePath);
         }
         else if (Instance != null)
         {

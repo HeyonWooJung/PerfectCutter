@@ -4,39 +4,48 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource swordSource;
+    [SerializeField] AudioSource woodSource;
+    [SerializeField] AudioSource bgm;
     [SerializeField] AudioClip equipSword;
     [SerializeField] AudioClip[] swordSwings;
     [SerializeField] AudioClip[] woodBreak;
-   
-    public bool Playing()
+    [SerializeField] AudioClip[] bgms;
+
+    private void Start()
     {
-        return audioSource.isPlaying;
+        PlayBgm();
     }
+
     public void EquipSword()
     {
-        audioSource.clip = equipSword;
-        audioSource.Play();
+        swordSource.clip = equipSword;
+        swordSource.Play();
     }
 
     public void SwingSword()
     {
-        audioSource.clip = swordSwings[Random.Range(0, swordSwings.Length)];
-        audioSource.Play();
+        swordSource.clip = swordSwings[Random.Range(0, swordSwings.Length)];
+        swordSource.Play();
     }
 
     public void BreakWood(int score)
     {
         if (score >= 90)
         {
-            audioSource.clip = woodBreak[0];
-            audioSource.Play();
+            woodSource.clip = woodBreak[0];
+            woodSource.Play();
         }
         else
         {
 
-            audioSource.clip = woodBreak[1];
-            audioSource.Play();
+            woodSource.clip = woodBreak[1];
+            woodSource.Play();
         }
+    }
+    public void PlayBgm()
+    {
+        bgm.clip = bgms[Random.Range(0, bgms.Length)];
+        bgm.Play();
     }
 }

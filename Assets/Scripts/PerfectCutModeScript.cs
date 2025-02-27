@@ -13,6 +13,21 @@ public class PerfectCutModeScript : MonoBehaviour
 
     [SerializeField] ResultScript resultScript;
     int timer = 120;
+    public AudioSource audioSource;
+    public AudioClip btnMouseOver;
+    public AudioClip btnClick;
+
+    public void BtnMouseOver()
+    {
+        audioSource.clip = btnMouseOver;
+        audioSource.Play();
+    }
+
+    public void BtnClick()
+    {
+        audioSource.clip = btnClick;
+        audioSource.Play();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +53,7 @@ public class PerfectCutModeScript : MonoBehaviour
                 timer = 120;
                 break;
         }
+        timerText.text = "Time: " + timer;
     }
 
     public void StartGame()
@@ -52,7 +68,7 @@ public class PerfectCutModeScript : MonoBehaviour
 
     IEnumerator Timer()
     {
-        while (timer > 0)
+        while (timer >= 0)
         {
             yield return new WaitForSeconds(1f);
             timer--;

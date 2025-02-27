@@ -25,11 +25,11 @@ public class ResultScript : MonoBehaviour
         switch(GameManager.Instance.Difficulty)
         {
             case 1:
-                diffText.text = "NewB";
+                diffText.text = "Ezy";
                 diffText.color = Color.green;
                 break;
             case 2:
-                diffText.text = "Common";
+                diffText.text = "Normal";
                 diffText.color = Color.yellow;
                 break;
             case 3:

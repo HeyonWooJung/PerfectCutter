@@ -8,6 +8,21 @@ public class TitleSceneScript : MonoBehaviour
     public GameObject diffPanel;
     public GameObject rankPanel;
     public TMP_Text titleLeft;
+    public AudioSource audioSource;
+    public AudioClip btnMouseOver;
+    public AudioClip btnClick;
+
+    public void BtnMouseOver()
+    {
+        audioSource.clip = btnMouseOver;
+        audioSource.Play();
+    }
+
+    public void BtnClick()
+    {
+        audioSource.clip = btnClick;
+        audioSource.Play();
+    }
 
     public void SetDiffPanel(bool state)
     {
