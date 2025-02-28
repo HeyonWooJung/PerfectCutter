@@ -20,6 +20,10 @@ public class ResultScript : MonoBehaviour
     [SerializeField] Button retry;
     [SerializeField] Button mainMenu;
 
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip resultAppear;
+    [SerializeField] AudioClip resultScoreSound;
+
     private void Start()
     {
         switch(GameManager.Instance.Difficulty)
@@ -49,15 +53,19 @@ public class ResultScript : MonoBehaviour
     IEnumerator ShowResult(int score, int maxCombo, int slice, int miss)
     {
         scoreTitle.gameObject.SetActive(true);
+        PlayResultAppear();
         yield return new WaitForSeconds(1f);
         yield return ShowScore(score);
         comboTitle.gameObject.SetActive(true);
+        PlayResultAppear();
         yield return new WaitForSeconds(1f);
         yield return ShowCombo(maxCombo);
         hnmTitle.gameObject.SetActive(true);
+        PlayResultAppear();
         yield return new WaitForSeconds(1f);
         yield return ShowSnM(slice, miss);
         buttons.SetActive(true);
+        PlayResultAppear();
         Cursor.lockState = CursorLockMode.None;
     }
 
@@ -71,6 +79,7 @@ public class ResultScript : MonoBehaviour
             addScore = 1;
         }
 
+        PlayResultScoreSound();
         while (tempScore < score)
         {
             tempScore += addScore;
@@ -93,6 +102,7 @@ public class ResultScript : MonoBehaviour
             addCombo = 1;
         }
 
+        PlayResultScoreSound();
         while (tempCombo < maxCombo)
         {
             tempCombo += addCombo;
@@ -117,6 +127,7 @@ public class ResultScript : MonoBehaviour
             addSlice = 1;
         }
 
+        PlayResultScoreSound();
         while (tempSlice < slice)
         {
             tempSlice += addSlice;
@@ -127,6 +138,7 @@ public class ResultScript : MonoBehaviour
             hitnMissText.text = tempSlice + " | 0";
             yield return new WaitForSeconds(0.05f);
         }
+        audioSource.Pause();
 
         yield return new WaitForSeconds(0.5f);
 
@@ -137,6 +149,7 @@ public class ResultScript : MonoBehaviour
             addMiss = 1;
         }
 
+        PlayResultScoreSound();
         while (tempMiss < miss)
         {
             tempMiss += addMiss;
@@ -147,6 +160,19 @@ public class ResultScript : MonoBehaviour
             hitnMissText.text = slice + " | " + tempMiss;
             yield return new WaitForSeconds(0.05f);
         }
+        audioSource.Pause();
         yield return new WaitForSeconds(0.5f);
+    }
+
+    void PlayResultAppear()
+    {
+        audioSource.clip = resultAppear;
+        audioSource.Play();
+    }
+
+    void PlayResultScoreSound()
+    {
+        audioSource.clip = resultScoreSound;
+        audioSource.Play();
     }
 }

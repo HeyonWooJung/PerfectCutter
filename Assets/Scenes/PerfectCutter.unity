@@ -11137,6 +11137,9 @@ MonoBehaviour:
   buttons: {fileID: 1540559859}
   retry: {fileID: 1630464589}
   mainMenu: {fileID: 1238709136}
+  audioSource: {fileID: 963194229}
+  resultAppear: {fileID: 8300000, guid: eac46263b63e00748bc7b25e56280926, type: 3}
+  resultScoreSound: {fileID: 8300000, guid: 75bbc46f7b86b774e9eaa3597c3f0988, type: 3}
 --- !u!1001 &1888159437
 PrefabInstance:
   m_ObjectHideFlags: 0
